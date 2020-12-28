@@ -1,1 +1,1 @@
-# seminar_foundations_of_data_science
+Seminar Foundations of Data Science
