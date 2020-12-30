@@ -1,3 +1,49 @@
 \section{Weak Learnability}
 
-This and that...
+Assuming that the realizable assumption~\cite[chapter 2]{SSBD14} holds, the generalization error
+$L_{(\mathcal{D}, f)}(h)$ of a PAC learner with respect to a distribution $\mathcal{D}$ and a
+labeling function $f$ can by the definition of PAC learning~\mbox{\cite[chapter 2]{SSBD14}} be reduced to an arbitrarily
+small number (with confidence of $1-\delta$) by increasing the sample size of the training sequence $S$.
+This, however, can be computationally infeasible in practical applications.
+
+The concept of weak learnability aims to relax the requirement that the generalization error of a hypothesis must
+become arbitrarily small the more the sample size is increased.
+For weak learning, it is sufficient that the learning algorithm yields a hypothesis $h$, that performs only slightly
+better than a random guess.
+One can think of weak learning as applying a simple rule which isn't fully capable of modeling the data generating process,
+but can still learn a little bit about the underlying problem so that it performs better than random.
+
+Formally, the definition of a weak learner differs only slightly from the definition of PAC learning.
+In the situation of a two-class classification problem, the definition of a weak learner, can be given as follows:
+
+\begin{definition}{($\gamma$-weak-learner)}
+\label{def:weak-learner}
+An Algorithm $A$ is a $\gamma$-weak-learner for a hypothesis class $\mathcal{H}$ if for every $\delta \in (0, 1)$ there
+exists a threshold $m_\mathcal{H}(\delta) \in \mathbb{N}$
+such that for every distribution $\mathcal{D}$ over the instance space $\mathcal{X}$
+and for every labeling function $f: \mathcal{X} \rightarrow \{\pm 1\}$ if running $A$ on $m \geq m_\mathcal{H}$ training
+examples, it will yield a hypothesis $h$ such that with probability of at least $1-\delta$ the generalization error
+$L_{(\mathcal{D}, f)}(h)$ is at most $\frac{1}{2} - \gamma$, provided that the realizable assumption holds.
+\end{definition}
+
+The parameter $\gamma$ in Definition \ref{def:weak-learner} tells us how well we can expect the weak learner to perform.
+For example if a learning algorithm is a $1\%$-weak-learner for a class $\mathcal{H}$, then the generalization
+error can at most be $49\%$ provided that first, the learner didn't fail
+(which can happen with probability $\delta$ of drawing a bad sample from $\mathcal{D}$)
+and second, the learner was run on at least $m_\mathcal{H}(\delta)$ training examples.
+
+It still remains the question of how to obtain a weak learning algorithm.
+We already saw that applying the ERM rule to complex hypothesis classes can be computationally hard.
+But what if we choose a simple hypothesis class $B$ instead, where the ERM rule can be applied efficiently?
+
+\begin{theorem}
+Let $B$ and $\mathcal{H}$ be hypothesis classes and $\text{ERM}_B$ a learning algorithm that applies the ERM rule to $B$.
+If for every distribution $\mathcal{D}$, for every $h \in \mathcal{H}$ and for every sample
+$S = ((x_1, h(x_1)), ..., (x_m, h(x_m)))$ from $\mathcal{D}$ labeled by $h$ it holds that
+$ERM_B$ returns a hypothesis $b \in B$ with
+$L_S(b) \leq \frac{1}{2} - \gamma$, then $ERM_B$ is a $\gamma$-weak-learner for $\mathcal{H}$.
+\end{theorem}
+
+\begin{proof}
+	TODO.
+\end{proof}
