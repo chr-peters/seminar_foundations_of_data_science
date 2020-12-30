@@ -1,11 +1,19 @@
 \section{Introduction}
-This article deals with the fundamentals of data science. We are covering the topic XYZ in particular, 
-which is very interesting and besides the theoretical depth has many practical applications.
 
-We start with a definition, which plays a central role in this work.
+Training machine learning models in practice is not always as simple as it might seem from a theoretical standpoint.
+In~\cite[chapter 2]{SSBD14}, the empirical risk minimization (ERM) rule was introduced as the learning algorithm
+of choice.
+However, this theoretical principle of choosing a hypothesis \mbox{$h \in \mathcal{H}$} such that
+$L_S(h) = \min_{h \in \mathcal{H}} L_S(h)$, where $L_S(h)$ is the error of $h$ on the training sequence $S$,
+can be impossible to use in practical applications due to the sometimes enormous computational complexity of searching
+through interesting hypothesis classes $\mathcal{H}$.
 
-\begin{definition}{(Euclidean norm)}
-    \begin{linenomath*}
-	    Let $x\in\mathbb{R}^d$. We denote by $$\|x\|=\sqrt{\sum_{i=1}^{d} x_i^2}$$ the Euclidean norm of $x$.
-    \end{linenomath*}
-\end{definition}
+This problem leads to the question if it is possible to arrive at a strong learning algorithm in a way that doesn't require the
+computational cost of searching through complex hypothesis classes.
+Is it perhaps possible to create a strong learner by finding a way to combine "weak" learners that are potentially easier to compute?
+The algorithmic paradigm of boosting deals with exactly this question, resulting in the widely used AdaBoost algorithm that
+shows how "weak" learners can be combined in order to obtain a strong learning algorithm.
+
+The goal of this article is to first lay down the foundations of boosting by explaining the concept of weak learnability which
+will be used to arrive at the AdaBoost algorithm followed by a discussion of its implications as well as a practical example of how it
+can be used in the domain of image classification.
