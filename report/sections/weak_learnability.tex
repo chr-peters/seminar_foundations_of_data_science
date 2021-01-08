@@ -43,8 +43,42 @@ for $\mathcal{H}$.
 \subsection{An Efficient ERM Algorithm for Decision Stumps}
 
 One such hypothesis class, where the ERM algorithm can be implemented efficiently, is the class of decision stumps.
-On the instance space $\mathcal{X} = \mathbb{R}^d$,  this class is given as
+On the instance space $\mathcal{X} = \mathbb{R}^d$,  this class is given as follows:
+\begin{linenomath}
 \begin{equation*}
     \mathcal{H}_{DS} = \{ \mathbf{x} \mapsto \text{sign}\left( \theta - x_i \right) \cdot b: \ 
         \theta \in \mathbb{R}, i \in \left[ d \right], b \in \{ \pm 1 \} \}
 \end{equation*}
+\end{linenomath}
+
+The idea behind decision stumps is to divide the instance space $\mathcal{X}$ along one of its dimensions
+$i \in \left[ d \right]$ at a threshold $\theta$ into two partitions, 
+such that all the instances in one partition are labeled
+$+1$ and all the instances in the other partition are labeled $-1$.
+An ERM algorithm for $\mathcal{H}_{DS}$ has to find the optimal splitting dimension $i \in \left[ d \right]$ as well
+as the optimal splitting threshold $\theta$ such that the training error $L_S(h)$ on a training sequence
+$S = \left( (\mathbf{x}_1, y_1),...,(\mathbf{x}_m, y_m) \right)$ is minimized.
+
+Let $b=1$ without the loss of generality. Then the $\text{ERM}_{\mathcal{H}_{DS}}$ algorithm has to solve
+the following optimization problem that minimizes the sum of misclassifications:
+\begin{linenomath}
+\begin{equation*}
+    \min_{j \in \left[ d \right]} \  \min_{\theta \in \mathbb{R}} \ 
+        \left( \sum_{i: y_i=1}^m \mathds{1}_{\left[ x_{i, j} > \theta \right]} + 
+            \sum_{i: y_i=-1}^m \mathds{1}_{\left[ x_{i, j} \leq \theta \right]} \right)
+\end{equation*}
+\end{linenomath}
+Taking a closer look at this problem it becomes clear, that it is not necessary to try every $\theta \in \mathbb{R}$
+during the optimization.
+In fact, if we first sort the examples for a fixed dimension $j \in \left[ d \right]$ so that
+$x_{1, j} \leq x_{2, j} \leq ... \leq x_{m, j}$, we can see that we only have to consider a single splitting 
+threshold in between two examples, which leaves us with $m+1$ values for $\theta$ that the 
+$\text{ERM}_{\mathcal{H}_{DS}}$ hat to consider for a fixed dimension $j \in \left[ d \right]$.
+Since the sum of misclassifications can be computed in $\mathcal{O}(m)$ by passing through the data once,
+the algorithm can find optimal values for $j$ and $\theta$ in $\mathcal{O}(dm^2)$ by simple enumeration.
+
+This time complexity can be reduced even more by avoiding to recalculate the sum of misclassifications for
+every new value of $\theta$. It can be shown~\cite{SSBD14} that it is possible to update the sum for a new
+value of $\theta$ in constant time, requiring only a single pass through the data for a fixed dimension $j$.
+This leaves us with a time complexity of $\mathcal{O}(dm)$ of solving the optimization problem after the sorting
+step is applied as preprocessing.
