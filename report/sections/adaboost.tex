@@ -1,20 +1,46 @@
 \section{AdaBoost}
-\label{adaboost}
+\label{sec:adaboost}
 
-Here we work with the above definitions and notations and derive important results such as the following
-Theorem on the least-squares solution
+In the previous section it was shown how an efficient weak learner can be constructed by applying the ERM rule to
+the class of decision stumps.
+This section presents the AdaBoost (Adaptive Boosting) algorithm, a proceducre that shows 
+how weak learners such as decision stumps can be
+used efficiently to find a hypothesis with an arbitrarily low empirical error $L_S(h)$ on a training sequence $S$.
 
-\begin{theorem}{(useful theorem)}
-\label{thm:main}
+The goal of AdaBoost is to invoke the weak learner multiple times on the training data and then to combine
+the resulting hypotheses similar to a weighted majority vote.
+Let $T$ be the number of times that AdaBoost invokes the weak learner on the training data. Then the resulting
+output hypothesis of AdaBoost has the following form:
 \begin{linenomath*}
-	Let $X\in\mathbb{R}^{n\times d}, Y\in\mathbb{R}^n$. Further define $\beta^* = \operatorname{argmin}_{\beta\in R^d}\|X\beta-Y\|^2$.
-	Then $$\|Y\|^2=\|X\beta^*\|^2 + \|X\beta^* - Y\|^2.$$
+    $$
+    h(x) = \text{sign}\left( \sum_{t=1}^T w_t h_t(x) \right)
+    $$
+\end{linenomath*}
+Here, $h_t(x)$ is the output hypothesis of the weak learner in iteration $t$ and $w_t$ is the corresponding weight
+that AdaBoost assigns to this hypothesis.
+
+In the first iteration $t=1$, the AdaBoost algorithm assigns an equal weight $D_i^{(1)} = \frac{1}{m}$ to each example
+in the training sequence $S$ and then invokes the weak learner on the weighted training sequence.
+The error of the resulting hypothesis is computed according to
+\begin{linenomath*}
+    $$
+    \epsilon_t = \sum_{i=1}^m D_i^{(t)} \mathds{1}_{\left[ h_t(\mathbf{x}_i) \neq y_i \right]}
+    $$
+\end{linenomath*}
+and is at most $\frac{1}{2}-\gamma$.
+
+The weight $w_t$ that is assigned to a hypothesis in boosting round $t$ is computed as follows:
+\begin{linenomath*}
+    $$
+    w_t = \frac{1}{2} \text{log} \left( \frac{1}{\epsilon_t} - 1 \right)
+    $$
 \end{linenomath*}
 
-\end{theorem}
-
-\begin{proof}
-	The proof is left as an exercise.
-\end{proof}
-
-Sometimes figures help to illustrate a formalism. This is completely unrelated to Theorem \ref{thm:main}.
+At the end of each iteration, the weights $D_i^{(t)}$ of each training example are updated according to
+\begin{linenomath*}
+    $$
+    D_i^{(t+1)} = \frac{D_i^{(t)} \text{exp} \left( -w_t y_i h_t(\mathbf{x}_i) \right)}{
+        \sum_{j=1}^m D_j^{(t)} \text{exp} \left( -w_t y_j h_t(\mathbf{x}_j) \right) }
+    $$
+\end{linenomath*}
+This update will assign a higher weight to those examples, that weren't correctly classified by $h_t$.
