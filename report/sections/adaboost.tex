@@ -35,6 +35,7 @@ The weight $w_t$ that is assigned to a hypothesis in boosting round $t$ is compu
     w_t = \frac{1}{2} \text{log} \left( \frac{1}{\epsilon_t} - 1 \right)
     $$
 \end{linenomath*}
+As we can see, the smaller the error $\epsilon_t$ of the hypothesis $h_t$ is, the bigger the weight $w_t$ will be.
 
 At the end of each iteration, the weights $D_i^{(t)}$ of each training example are updated according to
 \begin{linenomath*}
@@ -43,4 +44,34 @@ At the end of each iteration, the weights $D_i^{(t)}$ of each training example a
         \sum_{j=1}^m D_j^{(t)} \text{exp} \left( -w_t y_j h_t(\mathbf{x}_j) \right) }
     $$
 \end{linenomath*}
-This update will assign a higher weight to those examples, that weren't correctly classified by $h_t$.
+This update assigns a higher weight to those examples, that weren't correctly classified by $h_t$.
+
+In short, the Adaboost algorithm performs the following steps in each of the $T$ iterations:
+\begin{enumerate}
+    \item Invoke the weak learner on the training sequence $S$ weighted by $\mathbf{D}^{(t)}$
+    \item Assign a weight $w_t$ to the output hypothesis $h_t$ of the weak learner. Hypotheses with a smaller
+        training error $\epsilon_t$ will get a higher weight.
+    \item Compute a new weight vector $\mathbf{D}^{(t+1)}$ that gives a higher weight to incorrectly classified
+        examples.
+\end{enumerate}
+
+The computational complexity of AdaBoost essentially consists of invoking the weak learning algorithm $T$ times on
+the training data. Thus, if the weak learner can be implemented efficiently (as it is the case for decision stumps),
+AdaBoost is also efficient.
+
+On top of that, it can be shown~\cite{SSBD14}, 
+that the training error $L_S(h)$ of the AdaBoost hypothesis $h$ decreases exponentially
+in the number of boosting rounds $T$:
+\begin{linenomath*}
+    $$
+    L_S(h) = \frac{1}{m} \sum_{i=1}^m \mathds{1}_{\left[ h(\mathbf{x}_i) \neq y_i \right]} \leq e^{-2 \gamma^2 T}
+    $$
+\end{linenomath*}
+Here, $\gamma$ describes the $\gamma$-weak learner as defined in Definition~\ref{def:weak-learner}.
+This means, that AdaBoost will achieve an arbitrarily low training error and is still an efficient algorithm.
+
+In practical applications however, it is more important to also achieve a good out of sample error. The next section will
+show that the true risk $L_\mathcal{D}(h)$ of the AdaBoost hypothesis will also be small by taking a look at the
+hypothesis class $\mathcal{H}$ that resembles all the possible output hypotheses of AdaBoost.
+
+\subsection{AdaBoost Out-of-Sample Performance}
