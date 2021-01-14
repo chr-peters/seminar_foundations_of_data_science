@@ -1,17 +1,17 @@
 \section{AdaBoost}
 \label{sec:adaboost}
 
-In the previous section it was shown how an efficient weak learner can be constructed by applying the ERM rule to
+In the previous section, it was demonstrated how an efficient weak learner can be constructed by applying the ERM rule to
 the class of decision stumps.
-This section presents the AdaBoost (Adaptive Boosting) algorithm, a proceducre that shows 
+This section presents the AdaBoost (Adaptive Boosting) algorithm, a procedure that shows 
 how weak learners such as decision stumps can be
 used efficiently to find a hypothesis with an arbitrarily low empirical error $L_S(h)$ on a training sequence $S$.
-It was first proposed in 1995 by Yoav Freund and Robert Schapire~\cite{FREUND1997119} and became hugely popular
-due to its practicability.
+The AdaBoost algorithm was first proposed in 1995 by Yoav Freund and Robert Schapire~\cite{FREUND1997119}
+and became hugely popular due to its practicability.
 
 The goal of AdaBoost is to invoke the weak learner multiple times on the training data and then to combine
 the resulting hypotheses similar to a weighted majority vote.
-Let $T$ be the number of times that AdaBoost invokes the weak learner on the training data. Then the resulting
+Let $T$ be the number of times that the weak learner is invoked by AdaBoost. Then the resulting
 output hypothesis of AdaBoost has the following form:
 \begin{linenomath*}
     $$
@@ -29,7 +29,7 @@ The error of the resulting hypothesis is computed according to
     \epsilon_t = \sum_{i=1}^m D_i^{(t)} \mathds{1}_{\left[ h_t(\mathbf{x}_i) \neq y_i \right]}
     $$
 \end{linenomath*}
-and is at most $\frac{1}{2}-\gamma$.
+and is at most $\frac{1}{2}-\gamma$, provided that the weak learner didn't fail.
 
 The weight $w_t$ that is assigned to a hypothesis in boosting round $t$ is computed as follows:
 \begin{linenomath*}
@@ -70,7 +70,8 @@ in the number of boosting rounds $T$:
     $$
 \end{linenomath*}
 Here, $\gamma$ describes the $\gamma$-weak-learner as defined in Definition~\ref{def:weak-learner}.
-This means, that AdaBoost will achieve an arbitrarily low training error and is still an efficient algorithm.
+This means that, by increasing the number of boosting rounds $T$,  AdaBoost will achieve an arbitrarily low training
+error and is still an efficient algorithm.
 
 In practical applications however, it is more important to also achieve a good out of sample error. The next section will
 show that the true risk $L_\mathcal{D}(h)$ of the AdaBoost hypothesis will also be small by taking a look at the
@@ -88,18 +89,19 @@ the number of boosting rounds $T$. Formally, it is given as follows:
 \end{linenomath*}
 
 The fundamental theorem of statistical learning~\cite[chapter 6]{SSBD14} states that a hypothesis class is PAC-learnable
-if its VC dimension is finite.
+if and only if its VC dimension is finite.
 This means that if the VC dimension of $L(B, T)$ is finite, there exists a threshold 
 $m_\mathcal{H}(\epsilon, \delta) \in \mathbb{N}$ for every $\epsilon, \delta \in (0, 1)$, 
 such that the true error $L_\mathcal{D}(h)$ of the AdaBoost hypothesis $h \in L(B, T)$ is at most $\epsilon$
 (with confidence $1-\delta$)
 for every distribution $\mathcal{D}$ when training AdaBoost on at least $m_\mathcal{H}(\epsilon, \delta)$ training
-examples. This tells us that even the Out-of-Sample error of AdaBoost can be reduced arbitrarily (if the realizable
-assumption holds), by increasing the amount of training examples.
+examples. This tells us that if $L(B, T)$ is learnable, even the Out-of-Sample error of AdaBoost can be reduced
+arbitrarily (if the realizable assumption holds), by increasing the amount of training examples.
 
-It can be shown that an upper bound of the VC dimension of $L(B, T)$ is linear in the VC dimension of the hypothesis
-class $B$ of the weak learner and also linear in $T$, i.e. $\text{VCdim}(L(B, T)$ is in
-$\mathcal{O}(\text{VCdim}(B)T)$.
+It can be shown~\cite{SSBD14} that an upper bound of the VC dimension of $L(B, T)$ 
+is linear in the VC dimension of the hypothesis
+class $B$ of the weak learner and also linear in $T$, i.e. $\text{VCdim}(L(B, T))$ is in
+$\mathcal{O}(\text{VCdim}(B) \cdot T)$.
 This means that if the VC dimension of $B$ is finite, so is the VC dimension of $L(B, T)$.
 
 In the case of $B$ being the hypothesis class of all decision stumps, the VC dimension of $B$ is 2,

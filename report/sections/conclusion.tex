@@ -1,11 +1,15 @@
 \section{Conclusion}
 \label{conclusion}
 
-In this article it was shown how a weak learning algorithm can be boosted into a strong PAC learner using the
+In this article, it was demonstrated how a weak learning algorithm can be boosted into a strong PAC learner by using the
 AdaBoost algorithm.
-The hypothesis class of decision stumps was identified to be efficiently learnable using an ERM algorithm, so
-it followed that the AdaBoost algorithm is also efficient using decision stumps as the base learner.
+The hypothesis class of decision stumps was identified to be efficiently learnable using an ERM algorithm.
+Thus, the AdaBoost algorithm is also efficient when using decision stumps as the base learner.
 
-Further, it was also shown that AdaBoost is a PAC learner for the hypothesis class $L(B, T)$, which tells us
-that the true error of AdaBoost can be arbitrarily decreased by increasing the size of the training set.
+Furthermore, it was also shown that AdaBoost is a PAC learner for the hypothesis class $L(B, T)$, which tells us
+that the true error of AdaBoost can be arbitrarily decreased by increasing the size of the training set
+(if the realizable assumption holds).
+
 All of these properties make AdaBoost a useful algorithm for practical applications of machine learning.
+It is a great example, of how a purely theoretical question has led to the creation of an algorithm that became 
+hugely popular and widely adopted.
