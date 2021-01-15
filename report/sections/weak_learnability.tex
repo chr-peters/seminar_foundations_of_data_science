@@ -12,7 +12,7 @@ become arbitrarily small the more the sample size is increased.
 For weak learning, it is sufficient that the learning algorithm yields a hypothesis $h$ that performs only slightly
 better than a random guess.
 One can think of weak learning as applying a simple rule which isn't fully capable of modeling the data generating process,
-but can still learn a little bit about the underlying problem so that it performs better than random.
+but can still learn a small fraction of the underlying problem so that it performs better than random guessing.
 
 Formally, the definition of a weak learner differs only slightly from the definition of PAC learning.
 In the situation of a two-class classification problem, the definition of a weak learner can be given as follows:
@@ -38,7 +38,7 @@ There still remains the question of how such a weak learning algorithm for a hyp
 can be obtained.
 We already saw that applying the ERM rule to complex hypothesis classes can be computationally hard.
 But what if we choose a simple hypothesis class $B$ instead, where the ERM rule can be applied efficiently?
-It follows directly from Definition~\ref{def:weak-learner} that this can only work if the new algorithm
+It follows directly from Definition~\ref{def:weak-learner} that this can only work, if the new algorithm
 $\text{ERM}_B$ has an error of at most $\frac{1}{2} - \gamma$ for every sample that was labeled by a hypothesis from
 $\mathcal{H}$. In this case, applying the ERM rule with respect to the simpler class $B$ would yield a weak learner
 for $\mathcal{H}$.
@@ -58,8 +58,8 @@ such that all the instances in one partition are labeled
 $+1$ and all the instances in the other partition are labeled $-1$.
 
 Fixing $b=1$ without the loss of generality,
-an ERM algorithm for $\mathcal{H}_{DS}$ has to find the optimal splitting dimension $i \in \left[ d \right]$ as well
-as the optimal splitting threshold $\theta$ such that the training error $L_S(h)$ on a training sequence
+an ERM algorithm for $\mathcal{H}_{DS}$ has to find the optimal splitting dimension $i \in \left[ d \right]$, as well
+as the optimal splitting threshold $\theta$, such that the training error $L_S(h)$ on a training sequence
 $S = \left( (\mathbf{x}_1, y_1),...,(\mathbf{x}_m, y_m) \right)$ is minimized.
 
 An extension of the empirical risk $L_S(h)$ that will be useful when introducing the AdaBoost algorithm later in
@@ -79,7 +79,7 @@ the following optimization problem that minimizes the weighted sum of misclassif
         \left( \sum_{i: y_i=1}^m D_i \mathds{1}_{\left[ x_{i, j} > \theta \right]} + 
             \sum_{i: y_i=-1}^m D_i \mathds{1}_{\left[ x_{i, j} \leq \theta \right]} \right)$$
 \end{linenomath*}
-Taking a closer look at this problem it becomes clear, that it is not necessary to try every $\theta \in \mathbb{R}$
+Taking a closer look at this problem, it becomes clear that it is not necessary to try every $\theta \in \mathbb{R}$
 during the optimization.
 In fact, if we first sort the examples for a fixed dimension $j \in \left[ d \right]$ so that
 $x_{1, j} \leq x_{2, j} \leq ... \leq x_{m, j}$, we can see that we only have to consider a single splitting 
@@ -91,5 +91,5 @@ the algorithm can find optimal values for $j$ and $\theta$ in $\mathcal{O}(dm^2)
 This time complexity can be reduced even more by avoiding to recalculate the sum of misclassifications for
 every new value of $\theta$. It can be shown~\cite{SSBD14} that it is possible to update the sum for a new
 value of $\theta$ in constant time, requiring only a single pass through the data for a fixed dimension $j$.
-This leaves us with a time complexity of $\mathcal{O}(dm)$ of solving the optimization problem after the sorting
+This leaves us with a time complexity of $\mathcal{O}(dm)$ of solving the optimization problem, after the sorting
 step is applied as preprocessing.

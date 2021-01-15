@@ -80,7 +80,7 @@ hypothesis class that resembles all the possible output hypotheses of AdaBoost.
 \subsection{AdaBoost Out-of-Sample Performance}
 \label{sec:vcdim}
 
-The hypothesis class of AdaBoost is parameterized by the hypothesis class $B$ of the weak learner it uses as well as by
+The hypothesis class of AdaBoost is parameterized by the hypothesis class $B$ of the weak learner it uses, as well as by
 the number of boosting rounds $T$. Formally, it is given as follows:
 \begin{linenomath*}
     $$
@@ -116,7 +116,8 @@ is also efficient.
 
 \subsection{The Expressive Power of L(B, T)}
 
-In section~\ref{sec:vcdim}, we saw that the VC dimension of $L(B, T)$ grows linear in $T$ and in the VC dimension of
+In section~\ref{sec:vcdim}, we saw that the VC dimension of $L(B, T)$ grows linear in $T$ and also linear
+in the VC dimension of
 $B$. If $B$ is the class of decision stumps, it follows that the VC dimension
 of $L(B, T)$ is in $\mathcal{O}(T)$, i.e. the expressive power of the class increases with the parameter $T$.
 To demonstrate what that means, we can take a look how $L(B, T)$ can be used to learn the class of piece-wise constant
@@ -144,7 +145,7 @@ of piece-wise constant functions with $T$ pieces $\mathcal{G}_T$.
 	Without loss of generality, let $g \in \mathcal{G}_T$ with $\alpha_t = (-1)^t$. We can assign the weight
 	$w_1=-0.5$ to the first decision stump in $L(B, T)$ and for $t > 1$ we can assign the weights $w_t = (-1)^t$
 	to the remaining decision stumps. If we choose $\theta_{t-1}$ as the $\theta$ parameter for decision
-	tree $t$ and $b=-1$, we get the following hypothesis:
+	stump $t$ and $b=-1$, we get the following hypothesis:
 	$$
 	    h(x) = \text{sign} \left( \sum_{t=1}^T w_t \  \text{sign} (x - \theta_{t-1}) \right) \in L(B, T)
 	$$
@@ -163,9 +164,9 @@ $L(B, T)$ grows in $T$. In fact, if $B$ is the class of decision stumps and $\ma
 we just showed that the VC dimension of $L(B, T)$ is at least $T$.
 From this, we can see that the parameter $T$ directly influences the complexity of $L(B, T)$.
 
-While an increasing model complexity of an hypothesis class will reduce the approximation error, the bias-complexity
+While an increasing model complexity of a hypothesis class will reduce the approximation error, the bias-complexity
 tradeoff~\cite{SSBD14} tells us that increasing complexity can also increase the model estimation error.
-Thus, the remarkable property of this class $L(B, T)$ and also of the AdaBoost algorithm is, that the parameter
-$T$ can directly control the bias-complexity tradeoff.
+Thus, a remarkable property of the class $L(B, T)$ and also of the AdaBoost algorithm is that the parameter
+$T$ can be used to control the bias-complexity tradeoff.
 If, in a practical scenario, we wish to compare more complex models to simpler models, we could just see how the
 AdaBoost algorithm performs for different values of $T$ and then make a decision how complex the model should be.
