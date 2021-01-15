@@ -154,3 +154,18 @@ of piece-wise constant functions with $T$ pieces $\mathcal{G}_T$.
 	$g(x) = -1$, the weighted sum predicts $-0.5$. Thus, it follows that $h(x) = g(x)\  \forall x \in \mathbb{R}$,
 	which concludes the proof.
 \end{proof}
+
+We have shown that $L(B, T)$ contains every function that is made up of $T$ constant pieces. Since every labeled
+training sequence $S$ that contains $m$ examples can be perfectly classified by a function with $m$ pieces,
+$L(B, T)$ contains every possible labeling of $T$ data points in $\mathbb{R}$.
+This finding illustrates, why the VC dimension of
+$L(B, T)$ grows in $T$. In fact, if $B$ is the class of decision stumps and $\mathcal{X} = \mathbb{R}$,
+we just showed that the VC dimension of $L(B, T)$ is at least $T$.
+From this, we can see that the parameter $T$ directly influences the complexity of $L(B, T)$.
+
+While an increasing model complexity of an hypothesis class will reduce the approximation error, the bias-complexity
+tradeoff~\cite{SSBD14} tells us that increasing complexity can also increase the model estimation error.
+Thus, the remarkable property of this class $L(B, T)$ and also of the AdaBoost algorithm is, that the parameter
+$T$ can directly control the bias-complexity tradeoff.
+If, in a practical scenario, we wish to compare more complex models to simpler models, we could just see how the
+AdaBoost algorithm performs for different values of $T$ and then make a decision how complex the model should be.
