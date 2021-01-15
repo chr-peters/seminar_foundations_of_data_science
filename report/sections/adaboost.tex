@@ -142,10 +142,15 @@ of piece-wise constant functions with $T$ pieces $\mathcal{G}_T$.
 \end{theorem}
 \begin{proof}
 	Without loss of generality, let $g \in \mathcal{G}_T$ with $\alpha_t = (-1)^t$. We can assign the weight
-	$w_1=0.5$ to the first decision stump in $L(B, T)$ and for $t > 1$ we can assign the weights $w_t = (-1)^t$
+	$w_1=-0.5$ to the first decision stump in $L(B, T)$ and for $t > 1$ we can assign the weights $w_t = (-1)^t$
 	to the remaining decision stumps. If we choose $\theta_{t-1}$ as the $\theta$ parameter for decision
 	tree $t$ and $b=-1$, we get the following hypothesis:
 	$$
 	    h(x) = \text{sign} \left( \sum_{t=1}^T w_t \  \text{sign} (x - \theta_{t-1}) \right) \in L(B, T)
 	$$
+	We can see that the first decision stump with threshold $\theta_{0}$ and weight $w_1 = -0.5$ predicts the
+	constant value $-0.5$ for every $x \in \mathbb{R}$. The other trees mirror the change of $g$ for each threshold
+	using the weights $w_t = (-1)^t$. It follows that if $g(x) = 1$, the weighted sum predicts $1.5$ and for
+	$g(x) = -1$, the weighted sum predicts $-0.5$. Thus, it follows that $h(x) = g(x)\  \forall x \in \mathbb{R}$,
+	which concludes the proof.
 \end{proof}
