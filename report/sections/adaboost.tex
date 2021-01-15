@@ -78,6 +78,7 @@ show that the true risk $L_\mathcal{D}(h)$ of the AdaBoost hypothesis will also 
 hypothesis class that resembles all the possible output hypotheses of AdaBoost.
 
 \subsection{AdaBoost Out-of-Sample Performance}
+\label{sec:vcdim}
 
 The hypothesis class of AdaBoost is parameterized by the hypothesis class $B$ of the weak learner it uses as well as by
 the number of boosting rounds $T$. Formally, it is given as follows:
@@ -89,8 +90,10 @@ the number of boosting rounds $T$. Formally, it is given as follows:
 \end{linenomath*}
 
 The fundamental theorem of statistical learning~\cite[chapter 6]{SSBD14} states that a hypothesis class is PAC-learnable
-if and only if its VC dimension is finite.
-This means that if the VC dimension of $L(B, T)$ is finite, there exists a threshold 
+if and only if its VC dimension is finite, i.e. there exists a threshold $m$, such that for every set with more than
+$m$ elements there exists a labeling function that cannot be learned using that class.
+This means that if the VC dimension of $L(B, T)$ is finite and thus $L(B, T)$ is PAC-learnable, then, by the definition
+of PAC learning, there exists a threshold 
 $m_\mathcal{H}(\epsilon, \delta) \in \mathbb{N}$ for every $\epsilon, \delta \in (0, 1)$, 
 such that the true error $L_\mathcal{D}(h)$ of the AdaBoost hypothesis $h \in L(B, T)$ is at most $\epsilon$
 (with confidence $1-\delta$)
@@ -110,3 +113,39 @@ It follows from the fundamental theorem of statistical learning, that when using
 class for the weak learner, AdaBoost is a PAC learner for the class $L(B, T)$.
 Furthermore, if the weak learner for $B$ can be implemented efficiently (as we have shown for decision stumps), AdaBoost
 is also efficient.
+
+\subsection{The Expressive Power of L(B, T)}
+
+In section~\ref{sec:vcdim}, we saw that the VC dimension of $L(B, T)$ grows linear in $T$ and in the VC dimension of
+$B$. If $B$ is the class of decision stumps, it follows that the VC dimension
+of $L(B, T)$ is in $\mathcal{O}(T)$, i.e. the expressive power of the class increases with the parameter $T$.
+To demonstrate what that means, we can take a look how $L(B, T)$ can be used to learn the class of piece-wise constant
+functions, with $B$ being the class of decision stumps.
+
+The class of piece-wise constant functions on the line ($\mathcal{X} = \mathbb{R}$) is given as follows:
+\begin{linenomath*}
+    $$
+    \mathcal{G}_r = \left \{ x \mapsto \sum_{i=1}^r \alpha_i \mathds{1}_{[x \in (\theta_{i-1}, \theta_i]]}: \ 
+        \alpha_i \in \{\pm 1 \},\  -\infty = \theta_0 < \theta_1 < ... < \theta_r = \infty \right \}
+    $$
+\end{linenomath*}
+Here, $\theta_i \in \mathbb{R}$ are the thresholds and $\alpha_i$ determines the constant label $+1$ or $-1$
+for each area between two thresholds. We will now show, that $L(B, T)$ can be used to learn the class
+of piece-wise constant functions with $T$ pieces $\mathcal{G}_T$.
+
+\begin{theorem}
+\label{thm:piece-wise}
+\begin{linenomath*}
+	Let $B$ be the class of decision stumps and $L(B, T)$ as defined above.
+	Then $\mathcal{G}_T \subseteq L(B, T)$.
+\end{linenomath*}
+\end{theorem}
+\begin{proof}
+	Without loss of generality, let $g \in \mathcal{G}_T$ with $\alpha_t = (-1)^t$. We can assign the weight
+	$w_1=0.5$ to the first decision stump in $L(B, T)$ and for $t > 1$ we can assign the weights $w_t = (-1)^t$
+	to the remaining decision stumps. If we choose $\theta_{t-1}$ as the $\theta$ parameter for decision
+	tree $t$ and $b=-1$, we get the following hypothesis:
+	$$
+	    h(x) = \text{sign} \left( \sum_{t=1}^T w_t \  \text{sign} (x - \theta_{t-1}) \right) \in L(B, T)
+	$$
+\end{proof}
