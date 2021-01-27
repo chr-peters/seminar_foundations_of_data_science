@@ -1,5 +1,74 @@
-\section{Introduction}
+\begin{frame}{What you will know}
+    \textbf{$\rightarrow$ The idea behind boosting}
+    
+    \vspace{0.8cm}
 
-\begin{frame}{Introduction}
-    Introduction
+    \textbf{$\rightarrow$ How to create a strong and efficient learning algorithm}
+
+    \vspace{0.8cm}
+
+    \textbf{$\rightarrow$ What is AdaBoost and why is it so successful?}
+\end{frame}
+
+\section{Let's talk about training a model}
+
+\begin{frame}{How to train a machine learning model}
+    \textbf{What we have learned so far...}
+    \begin{itemize}
+        \item We have to pick a hypothesis class $\mathcal{H}$
+        \item $\mathcal{H}$ can't be too complex (VC dim needs to be finite)
+        \item We need enough training data (more than some threshold $m_\mathcal{H}$)
+        \item Then we use ERM to pick the best $h \in \mathcal{H}$ that minimizes the empirical error
+    \end{itemize}
+    But there is one problem...
+\end{frame}
+
+\begin{frame}{The problem with ERM}
+\setlength{\fboxrule}{2pt}
+    \begin{center}
+        \fbox{\huge \textbf{ERM can be hard.}}
+    \end{center}
+    \begin{itemize}
+        \item Depending on $\mathcal{H}$, the optimization problem can become arbitrarily complex
+        \item e.g. implementing ERM for halfspaces in the non-separable case is computationally hard (chapter 9)
+        \item For many interesting classes, it is infeasible to implement ERM
+        \begin{itemize}
+            \item Solving the optimization problem takes forever
+        \end{itemize}
+    \end{itemize}
+    \textbf{...so what can we do?}
+\end{frame}
+
+\begin{frame}{A first idea...}
+    \textbf{Idea:} Use simpler hypothesis classes where ERM isn't hard.
+    \begin{itemize}
+        \item Problem: Simple classes can be too "weak" to estimate all relationships in the data
+        \begin{itemize}
+            \item[$\rightarrow$] Can lead to underfitting and poor performance
+        \end{itemize}
+        \item Approximation error is high ($\rightarrow$ B/C tradeoff)
+        \item Still, these classes can be useful for us
+        \begin{itemize}
+            \item If the resulting hypothesis is at least better than random
+        \end{itemize}
+    \end{itemize}
+    Let's call ERM on a simple class a \textbf{weak learner}. We will formally define it later...
+\end{frame}
+
+\begin{frame}{The idea behind boosting}
+    \textbf{Why not combine a lot of weak learners?}\\
+    \textbf{Can this give us an efficient strong learner?}
+    \begin{itemize}
+        \item This theoretical question is the origin of boosting
+        \item It was first raised in 1988 by Kearns and Valiant~\cite{kv-lbffahf-88}
+        \item The first (practical) answer was given in 1995 by Freund and Schapire~\cite{FREUND1997119}
+        \begin{itemize}
+            \item[$\rightarrow$] It is YES!
+        \end{itemize}
+        \item The result is \textbf{AdaBoost}, a widely popular and award winning algorithm
+        \begin{itemize}
+            \item We will take a look at this later...
+        \end{itemize}
+    \end{itemize}
+    But first, let's get back to weak learning.
 \end{frame}
