@@ -1,5 +1,26 @@
 \section{Weak Learnability}
 
-\begin{frame}{Weak Learnability}
-    Weak Learnability
+\begin{frame}{What exactly is a weak learner?}
+    \textbf{Remember, that a strong PAC learner for a class $\mathcal{H}$...} \pause
+    \begin{itemize}
+        \item ...if it is presented with $m > m_\mathcal{H}(\epsilon, \delta)$ examples \pause
+        \item ...has to find a hypothesis $h \in \mathcal{H}$ \pause
+        \item ...such that $L_{(\mathcal{D}, f)}(h) < \epsilon$ for every $D$ and $f$ with confidence $1 - \delta$ (if RA holds) \pause
+    \end{itemize}
+    \vspace{0.5cm}
+    \centering
+    \fbox{\textbf{In weak learning, we only want the error to be less than 50\%.}}
+\end{frame}
+
+\begin{frame}{Weak learning definition}
+    \textbf{An algorithm A is a $\gamma$-weak-learner for a class $\mathcal{H}$, if...} \pause
+    \begin{itemize}
+        \item ...for every $\delta \in (0, 1)$ there exists a threshold 
+            $m_{\mathcal{H}}(\delta) \in \mathbb{N}$, such that \pause
+        \item ...if trained on at least $m > m_{\mathcal{H}}(\delta)$ examples \pause
+        \item ...it will find a hypothesis $h$, such that \pause
+        \item ...$L_{(\mathcal{D}, f)}(h) < \frac{1}{2} - \gamma$
+            with confidence $1 - \delta$ \pause
+        \item ...for every labeling function $f$ and every distribution $\mathcal{D}$ (if RA holds)
+    \end{itemize}
 \end{frame}
