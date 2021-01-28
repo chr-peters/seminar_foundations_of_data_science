@@ -62,3 +62,15 @@ You can read it for free at \url{https://mitpress.mit.edu/books/boosting}}}
         \includegraphics[width=\textwidth]{img/example_result}
     \end{figure}
 \end{frame}
+
+\begin{frame}{AdaBoost training error}
+    \begin{itemize} \pause
+        \item In the example, the training error was reduced to zero \pause
+        \item What about the general case? \pause
+        \begin{equation*}
+            L_S(h) = \frac{1}{m} \sum_{i=1}^m \mathds{1}_{\left[ h(\mathbf{x}_i) \neq y_i \right]} \leq e^{-2 \gamma^2 T}
+        \end{equation*} \pause
+        \item The training error of AdaBoost decreases exponentially in $T$ \pause
+    \end{itemize}
+    \textbf{...but what about the out of sample error?}
+\end{frame}
