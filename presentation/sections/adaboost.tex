@@ -5,11 +5,8 @@
         \item AdaBoost invokes the weak learner $T$ times
             on the training data using different sample weights
             $(D_1^{(t)}, ..., D_m^{(t)}), \  t=1, ..., T$ \pause
-        \begin{itemize}
-            \item The weak learner will minimize the weighted empirical error \pause
-        \end{itemize}
         \item In every iteration $t$, the weak learner finds a hypothesis $h_t$ \pause
-        \item Then, AdaBoost combines the weak hypotheses $h_t$ like this:
+        \item Then, AdaBoost does a weighted majority vote:
     \end{itemize}
     \begin{equation*}
         h(x) = \text{sign}\left( \sum_{t=1}^T w_t h_t(x) \right)
@@ -65,7 +62,7 @@ You can read it for free at \url{https://mitpress.mit.edu/books/boosting}}}
 
 \begin{frame}{AdaBoost training error}
     \begin{itemize} \pause
-        \item In the example, the training error was reduced to zero \pause
+        \item In the previous example, the training error was reduced to zero \pause
         \item What about the general case? \pause
         \begin{equation*}
             L_S(h) = \frac{1}{m} \sum_{i=1}^m \mathds{1}_{\left[ h(\mathbf{x}_i) \neq y_i \right]} \leq e^{-2 \gamma^2 T}

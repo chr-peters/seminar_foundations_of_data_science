@@ -1,6 +1,6 @@
 \section{Weak Learnability}
 
-\begin{frame}{What exactly is a weak learner?}
+\begin{frame}{What exactly is a weak learner?} \pause
     \textbf{Remember, that a strong PAC learner for a class $\mathcal{H}$...} \pause
     \begin{itemize}
         \item ...if it is presented with $m > m_\mathcal{H}(\epsilon, \delta)$ examples \pause
@@ -24,19 +24,19 @@
         \item ...for every labeling function $f$ and every distribution $\mathcal{D}$
             (if RA holds) \pause
     \end{itemize}
-    \textbf{...but how does this help us?}
-\end{frame}
-
-\begin{frame}{Why we care about weak learning}
-    \begin{itemize}
-        \item We already know that implementing ERM for strong learners can be
-            computationally hard \pause
-        \item Weak learners don't have to be that accurate (only better than 50\%) \pause
-        \item Maybe we can find weak learners that can be implemented efficiently \pause
-        \item ...and then use boosting to still end up with a strong learner \pause
-    \end{itemize}
     \textbf{Lets look at an example (Decision Stumps)}
 \end{frame}
+
+%\begin{frame}{Why we care about weak learning}
+%    \begin{itemize} \pause
+%        \item We already know that implementing ERM for strong learners can be
+%            computationally hard \pause
+%        \item Weak learners don't have to be that accurate (only better than 50\%) \pause
+%        \item Maybe we can find weak learners that can be implemented efficiently \pause
+%        \item ...and then use boosting to still end up with a strong learner \pause
+%    \end{itemize}
+%    \textbf{Lets look at an example (Decision Stumps)}
+%\end{frame}
 
 \begin{frame}{Spam detection with decision stumps}
     \begin{figure}
@@ -47,7 +47,7 @@
 \end{frame}
 
 \begin{frame}{ERM for decision stumps is efficient}
-    \begin{itemize}
+    \begin{itemize} \pause
         \item Decision Stumps partition the instance space $\mathcal{X}$
             along a single dimension \pause
         \item This is the hypothesis class: \pause
@@ -68,23 +68,32 @@
     \fbox{\textbf{This can be solved in $\mathcal{O}(dm)$!}}
 \end{frame}
 
-\begin{frame}{What we learned so far}
-    \begin{itemize}
-        \item What is a weak learner? \pause
-        \begin{itemize}
-            \item[$\rightarrow$] An algorithm that finds a hypothesis that
-                performs better than random
-        \end{itemize} \pause
-        \item What are decision stumps? \pause
-        \begin{itemize}
-            \item[$\rightarrow$] A simple hypothesis class where ERM is efficient.
-                Decision stumps partition the feature space along a single dimension.
-        \end{itemize} \pause
-        \item What is the idea behind boosting? \pause
-        \begin{itemize}
-            \item[$\rightarrow$] Use an efficient weak learner to create weak hypotheses.
-                Combine them to get a strong hypothesis.
-        \end{itemize} \pause
-    \end{itemize}
-    \textbf{But how to do that? The AdaBoost algorithm will tell us...}
+%\begin{frame}{What we learned so far}
+%    \begin{itemize} \pause
+%        \item What is a weak learner? \pause
+%        \begin{itemize}
+%            \item[$\rightarrow$] An algorithm that finds a hypothesis that
+%                performs better than random
+%        \end{itemize} \pause
+%        \item What are decision stumps? \pause
+%        \begin{itemize}
+%            \item[$\rightarrow$] A simple hypothesis class where ERM is efficient.
+%                Decision stumps partition the feature space along a single dimension.
+%        \end{itemize} \pause
+%        \item What is the idea behind boosting? \pause
+%        \begin{itemize}
+%            \item[$\rightarrow$] Use an efficient weak learner to create weak hypotheses.
+%                Combine them to get a strong hypothesis.
+%        \end{itemize} \pause
+%    \end{itemize}
+%    \textbf{But how to do that? The AdaBoost algorithm will tell us...}
+%\end{frame}
+
+\begin{frame}{Wisdom of the crowd} \pause
+    \centering
+    \textbf{So now we know what a weak learner is.}\\
+    \textbf{But how can weak learners be used to build something powerful?} \pause
+    \begin{figure}
+        \includegraphics[height=0.6\textheight]{img/apes}
+    \end{figure}
 \end{frame}
