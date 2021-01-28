@@ -71,3 +71,23 @@ You can read it for free at \url{https://mitpress.mit.edu/books/boosting}}}
     \end{itemize}
     \textbf{...but what about the out of sample error?}
 \end{frame}
+
+\begin{frame}{AdaBoost hypothesis class}
+    \begin{itemize} \pause
+        \item The AdaBoost hypothesis is part of the following class:
+        \begin{equation*}
+            L(B, T) = \left \{ x \mapsto \text{sign} \left( \sum_{t=1}^T w_t h_t(x) \right): \ 
+        w \in \mathbb{R}^T, \  h_t \in B \right \}
+        \end{equation*} \pause
+        \item It can be shown that VC dim of $L(B, T)$ is in 
+            $\mathcal{O}(T \cdot \text{VCdim}(B))$ \pause
+        \item For decision stumps, VC dim is finite \pause
+        \begin{itemize}
+            \item[$\Rightarrow$] VC dim of AdaBoost hypothesis is finite! $L(B, T)$ is learnable!
+        \end{itemize} \pause
+        \item $T$ controls model complexity ($\rightarrow$ B/C tradeoff)
+        \begin{itemize}
+            \item Sidenote: Careful with overfitting!
+        \end{itemize}
+    \end{itemize}
+\end{frame}
